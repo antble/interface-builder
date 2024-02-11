@@ -1,0 +1,26 @@
+units metal
+boundary p p p
+atom_style atomic
+
+
+read_data ${input_filename}
+
+pair_style  usc
+pair_coeff  * * ${potential_filename} H O Si
+
+pair_modify coord 2 3 2.0 0.3
+pair_modify coord 2 1 1.4 0.3
+mass            1 1.00794
+mass            2 15.9994
+mass            3 28.08
+
+compute coordO O coord/atom cutoff 2 1*3
+compute         31 O reduce sum c_coordO
+thermo_style    custom step temp pe c_31
+run             0
+variable aloneO atom "c_coordO==1"
+group  lonerO variable aloneO
+group lonerO intersect O lonerO
+delete_atoms group lonerO
+
+write_data ${output_filename}

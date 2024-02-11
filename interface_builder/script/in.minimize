@@ -1,0 +1,24 @@
+units metal
+boundary p p p
+atom_style atomic
+
+
+read_data ${input_filename}
+
+pair_style  usc
+pair_coeff  * * ${potential_filename} H O Si
+
+pair_modify coord 2 3 2.0 0.3
+pair_modify coord 2 1 1.4 0.3
+mass            1 1.00794
+mass            2 15.9994
+mass            3 28.08
+
+group Si type 3 
+group O type 2 
+group H type 1
+
+minimize 1e-8 1e-8 10000 10000
+
+run 0
+write_data ${output_filename}

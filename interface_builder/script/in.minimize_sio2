@@ -1,0 +1,15 @@
+units metal
+boundary p p p
+atom_style atomic
+
+read_data ${input_filename}
+
+pair_style vashishta
+pair_coeff	* * ${potential_filename} O Si
+mass 1 15.9994
+mass 2 28.08
+
+minimize 1e-8 1e-8 10000 10000
+
+run 0
+write_data ${output_filename}

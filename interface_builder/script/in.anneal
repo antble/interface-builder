@@ -1,0 +1,72 @@
+units metal 
+boundary p p p 
+atom_style atomic
+
+# variable lx equal 1
+# variable ly equal 1
+# variable lz equal 1
+
+variable dt equal 0.002#0.0005 
+variable temp_init equal 300
+variable temp_melt equal 900 #4000 
+
+# Annealing time is in picosecond 
+variable rapid_heating equal 30 
+variable thermalize1 equal 50#20 
+variable cooling equal 10 
+variable thermalize2 equal 50 
+variable equilibration equal 20 
+
+# annealing time converted to steps 
+variable steps_rh equal ${rapid_heating}/${dt}
+variable steps_th1 equal ${thermalize1}/${dt}
+variable steps_co equal ${cooling}/${dt}
+variable steps_th2 equal ${thermalize2}/${dt}
+variable steps_eq equal ${equilibration}/${dt} 
+
+read_data ${input_filename}
+
+pair_style vashishta 
+pair_coeff * * ${potential_filename} O Si 
+mass 1 15.9994 
+mass 2 28.08 
+
+# fix the bottom (4 angstrom) of the glass
+region silica_bottom block INF INF INF INF 0 4
+group bottom region silica_bottom
+fix fix1 bottom setforce 0.0 0.0 0.0  
+
+
+region silica_region1 block INF INF INF INF 4 40
+region silica_region2 block INF INF INF INF 50 59
+region silica_region union 2 silica_region1 silica_region2
+group silica region silica_region
+
+neigh_modify every 1 delay 0 check yes
+timestep ${dt}
+
+thermo_style custom step time temp press etotal cpuremain 
+thermo 100
+
+velocity silica create ${temp_init} ${seed} mom yes loop geom 
+# rapid heating: 300K -> 4000K,  for 30 ps 
+fix 1 silica nvt temp ${temp_init} ${temp_melt} $(100*dt) #0.1 
+run ${steps_rh} 
+# thermalization: 4000K, for 20 ps 
+fix 1 silica nvt temp ${temp_melt} ${temp_melt} $(100*dt) #1.0 
+run ${steps_th1}
+
+fix 1 silica nvt temp ${temp_melt} 600 $(100*dt) #1.0 
+run ${steps_co}
+
+fix 1 silica nvt temp 600 600 $(100*dt) #
+run ${steps_th2}
+
+# Equilibration run 
+fix 1 silica nvt temp 600 300 $(100*dt) #
+run ${steps_eq}
+
+# Silica at room temp is amorphous
+write_data ${output_filename}
+
+
