@@ -1,6 +1,6 @@
 # Interface Builder 
 <p align="center">
-  <img src="./water-silica.png" alt="Silica-water system" width="500" height="300">
+  <img src="./water-silica.png" alt="Silica-water system" width="300" height="300">
 </p>
 This package facilitates the automated generation of silica-water interfaces, offering diverse options for creating silica surfaces, silica systems, and silica-water systems.
 
