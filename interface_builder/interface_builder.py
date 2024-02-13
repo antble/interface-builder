@@ -28,13 +28,6 @@ class Silica:
         self.sio2_potential = sio2_potential
         self.sio2_h2o_potential = sio2_h2o_potential
 
-        # files = [sio2_potential, sio2_h2o_potential, h2o_potential]
-        # for file in files:
-        #     if os.path.exists(file_path):
-        #         print("File exists!")
-        #     else:
-        #         print("File does not exist.")
-
         # create the output directory
         os.system(f'mkdir {output_folder}')
         if lx is None and ly is None and lz is None:
