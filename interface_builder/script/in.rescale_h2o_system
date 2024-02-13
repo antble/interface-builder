@@ -1,0 +1,89 @@
+units metal
+boundary p p p
+atom_style atomic
+
+read_data ${input_filename}
+
+pair_style 	vashishta
+pair_coeff * * ${potential_filename} H O 
+mass 1 1.008
+mass 2 15.9994
+
+
+minimize 1.0e-8 1.0e-8 100000 100000
+
+
+neighbor 2.0 bin 
+neigh_modify every 1 delay 0 check yes 
+
+velocity all create 300 277385 mom yes loop geom
+
+log log_water.lammps
+# thermalize the system 50ps 
+variable dt equal 0.0005
+variable thermalising_time equal  ${therm_time} # ps 
+variable thermalising_steps equal ${thermalising_time}/${dt} # 1M steps 
+
+fix 1 all nvt temp 300 300 ${dt}
+dump silica all custom 100 water_thermalization.dump id type x y z
+
+thermo 100
+thermo_style custom step time temp press pe etotal spcpu cpuremain
+
+
+timestep ${dt}
+run ${thermalising_steps}
+
+write_data ${output_filename}
+
+
+
+# units metal
+# boundary p p p
+# atom_style atomic
+
+# read_data ${input_filename}
+
+# pair_style 	vashishta
+# pair_coeff * * ${potential_filename} H O 
+# mass 1 1.008
+# mass 2 15.9994
+
+# minimize 1.0e-8 1.0e-8 100000 100000
+
+# neighbor 2.0 bin 
+# neigh_modify every 1 delay 0 check yes 
+# variable seed equal 123 
+# velocity all create 300 ${seed} mom yes loop geom
+
+# reset_timestep 0
+# # thermalize the system 50ps 
+# variable dt equal 0.0005
+# variable thermalising_time equal  ${therm_time}# ps 
+# variable thermalising_steps equal ${thermalising_time}/${dt} # 1M steps 
+
+# log ${output_folder}/log_water.lammps
+# fix 1 all npt temp 300 300 $(100*dt) iso 1 1 $(1000.0*dt)
+# # dump silica all custom 100 water_thermalization.dump id type x y z
+
+# variable Volume equal vol
+# fix VolAve all ave/time 1 ${thermalising_steps} ${thermalising_steps} v_Volume file volume.dat
+
+# thermo_style custom step time density temp press pe etotal spcpu cpuremain
+# thermo 10
+
+# timestep ${dt}
+# run ${thermalising_steps}
+
+# # # adjust the size of the system to the average volume
+# # variable lz_new equal (f_VolAve/(${lx}*${ly}))
+# # variable vol equal f_VolAve
+# # variable xlow equal xlo 
+# # variable ylow equal ylo 
+# # variable zlow equal zlo 
+# # variable xhig equal (xlo+${ly})
+# # variable yhig equal (ylo+${ly})
+# # variable zhig equal (zlo+${lz_new})
+# # change_box all x final ${xlow} ${xhig} y final ${ylow} ${yhig} z final ${zlow} ${zhig}
+
+# write_data ${output_filename}

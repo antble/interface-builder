@@ -1,0 +1,35 @@
+units metal
+boundary p p p
+atom_style atomic
+
+read_data ${input_filename}
+
+pair_style vashishta
+pair_coeff	* * ${potential_filename} O Si
+mass 1 15.9994
+mass 2 28.08
+
+
+neighbor 2.0 bin 
+neigh_modify every 1 delay 0 check yes 
+
+velocity all create ${therm_temp} 277385 mom yes loop geom
+
+# thermalize the system 5ps 
+# variable dt equal 0.0005
+variable thermalising_time equal  ${therm_time}# ps 
+variable thermalising_steps equal ${thermalising_time}/dt # 1M steps 
+
+fix 1 all nvt temp ${therm_temp} ${therm_temp} $(100*dt)
+dump silica all custom 100 ${output_folder}/amorphous_thermalization.dump id type x y z
+
+thermo 1000
+thermo_style custom step time temp press pzz etotal spcpu cpuremain
+
+
+timestep 0.002  # ${dt} #
+run ${thermalising_steps}
+
+write_data ${output_filename}
+
+

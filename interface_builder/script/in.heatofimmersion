@@ -1,0 +1,122 @@
+log ${output_folder}/log_water.lammps
+# ============================ Water system Energy
+units metal
+boundary p p p
+
+atom_style atomic
+
+read_data ${h2o_system}
+
+pair_style 	vashishta
+pair_coeff * * ${h2o_potential} H O
+mass 1 1.008
+mass 2 15.9994
+
+
+minimize 1.0e-8 1.0e-8 100000 100000
+
+
+neighbor 2.0 bin 
+neigh_modify every 1 delay 0 check yes 
+
+velocity all create 300 277385 mom yes loop geom
+
+# thermalize the system 50ps 
+variable dt equal 0.0005
+variable thermalising_time equal  10 # ps 
+variable thermalising_steps equal ${thermalising_time}/${dt} # 1M steps 
+
+# fix 1 all nvt temp 300 300 ${dt}
+fix 1 all npt temp 300 300 $(100*dt) iso 1 1 $(1000*dt)
+dump silica all custom 100 water_thermalization.dump id type x y z
+
+thermo 100
+thermo_style custom step time temp press pe density etotal spcpu cpuremain
+
+
+timestep ${dt}
+run ${thermalising_steps}
+
+
+clear
+# ============================ Passivated silica system energy
+log ${output_folder}/log_silica-thermalized.lammps 
+
+units metal
+boundary p p p
+atom_style atomic
+
+read_data ${sio2_system}
+
+# pair_style  vashishta
+# pair_coeff  * * ${sio2_potential} O Si
+# mass            1 15.9994
+# mass            2 28.08
+pair_style  usc
+pair_coeff  * * ${h2o_sio2_potential} H O Si
+pair_modify coord 2 3 2.0 0.3
+pair_modify coord 2 1 1.4 0.3
+mass            1 1.00794
+mass            2 15.9994
+mass            3 28.08
+
+neighbor 2.0 bin 
+neigh_modify every 1 delay 0 check yes 
+variable seed equal 123
+velocity all create 300 ${seed} mom yes loop geom
+
+# thermalize the system 5ps 
+variable dt equal 0.0005 
+variable thermalising_time equal  10 # ps 
+variable thermalising_steps equal ${thermalising_time}/${dt}
+
+fix 1 all nvt temp 300 300 $(100*dt)
+dump silica all custom 100 silica-thermalize.dump id type x y z
+
+thermo_style custom step time temp etotal spcpu cpuremain
+thermo 10
+
+timestep ${dt}
+run ${thermalising_steps}
+
+
+clear
+# ============================ Water-silica system energy
+log ${output_folder}/log_watersilica-thermalized.lammps 
+units metal
+boundary p p p
+atom_style atomic
+
+read_data ${h2o_sio2_system}
+
+pair_style  usc
+pair_coeff  * * ${h2o_sio2_potential} H O Si
+pair_modify coord 2 3 2.0 0.3
+pair_modify coord 2 1 1.4 0.3
+mass            1 1.00794
+mass            2 15.9994
+mass            3 28.08
+
+group Si type 3 
+group O type 2 
+group H type 1
+
+neighbor 2.0 bin 
+neigh_modify every 1 delay 0 check yes 
+variable seed equal 123
+velocity all create 300 ${seed} mom yes loop geom
+
+# thermalize the system 5ps 
+variable dt equal 0.0005 
+variable thermalising_time equal  10 # ps 
+variable thermalising_steps equal ${thermalising_time}/${dt} # 1M steps 
+dump silica all custom 100 silica-water.dump id type x y z
+
+fix 1 all nvt temp 300 300 $(100*dt)
+
+thermo_style custom step time temp etotal spcpu cpuremain
+thermo 10
+
+timestep ${dt}
+run ${thermalising_steps}
+

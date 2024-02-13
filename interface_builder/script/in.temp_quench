@@ -1,3 +1,4 @@
+log ${self.output_folder}/log.lammps
 units metal 
 boundary p p p 
 atom_style atomic

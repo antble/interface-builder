@@ -19,8 +19,8 @@ velocity all create ${therm_temp} 277385 mom yes loop geom
 variable thermalising_time equal  ${therm_time}# ps 
 variable thermalising_steps equal ${thermalising_time}/dt # 1M steps 
 
-fix 1 all nvt temp ${therm_temp} ${therm_temp} $(100*dt)
-# dump silica all custom 100 ./output/amorphous_thermalization.dump id type x y z
+fix 1 all npt temp ${therm_temp} ${therm_temp} $(100*dt) iso ${press} ${press} $(1000*dt)
+dump silica all custom 100 amorphous_thermalization.dump id type x y z
 
 thermo 1000
 thermo_style custom step time temp press pzz etotal spcpu cpuremain

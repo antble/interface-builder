@@ -27,29 +27,30 @@ velocity all create 300 ${seed} mom yes loop geom
 
 # thermalize the system 5ps 
 variable dt equal 0.0005 
-variable thermalising_time equal ${passivate_T} # ps 
+variable thermalising_time equal ${passivate_time} # ps 
 variable thermalising_steps equal ${thermalising_time}/${dt} # steps 
 
 fix 1 all nvt temp 300 300 $(100*dt)
 
-variable w_zInitial equal ${water_zInitial}
-variable w_zFinal equal ${water_zFinal}-2 # 2 is to avoid deleting ceiling atoms 
-variable s_zInitial equal ${silica_zInitial}
-variable s_zFinal equal ${water_zInitial}-1
-region above block INF INF INF INF $(v_w_zInitial) $(v_w_zFinal) #20 45 #  #41 80
-region silica block INF INF INF INF $(v_s_zInitial) $(v_s_zFinal) #0 19 # #0 40
+region above block INF INF INF INF ${lz_half_above} INF 
+region below block INF INF INF INF INF ${lz_half_above} 
+region silica block INF INF INF INF ${lz_si_init} ${lz_si_final} 
+
+group water_above region above
+group water_below region below
+group si_slab region silica 
+
+group Obelow intersect O water_below 
+group Oabove intersect O water_above 
+group Owater union Obelow Oabove
+group Osilica intersect O si_slab
+
 
 group water_above region above
 group si_slab region silica 
 
 group Owater intersect O water_above 
 group Osilica intersect O si_slab
-
-# # fix the bottom (4 angstrom) of the glass
-# region silica_region block INF INF INF INF 0 4
-# group silica_bottom region silica_region
-# fix fix1 silica_bottom setforce 0.0 0.0 0.0  
-
 
 log log_passivate.lammps 
 # Number of water molecule in the system 
@@ -68,7 +69,6 @@ compute SiO Owater coord/atom cutoff 2.0 3
 variable SiO_count atom c_SiO==1 
 compute SiO_count all reduce sum v_SiO_count
 
-
 variable silanol equal (c_SiOH_count+c_SiO_count)/(lx*ly)*100   # x100, angstrom^3 -> nm^3 
 variable total equal c_SiOH_count+c_SiO_count
 dump water_molecule all atom 100 passivation.lammpstrj
@@ -81,18 +81,22 @@ timestep ${dt}
 run ${thermalising_steps}
 write_data ${output_filename}_0
 
-### 0. Delete all water molecule above the silica slab
-variable start equal ${water_zInitial}-2  
-variable end equal ${water_zFinal}-5       
+### 0. Delete all water molecule above and below the silica slab
 log log_passivate-delete.lammps 
-region above1 block INF INF INF INF $(v_start) $(v_end)
-group extra region above1
+variable upper_limit equal ${lz_half_above}+0.2
+variable lower_limit equal ${lz_si_init}-0.2
+region above1 block INF INF INF INF $(v_upper_limit) INF
+region below1 block INF INF INF INF INF $(v_lower_limit)
+group water_above1 region above1
+group water_below1 region below1
+group extra union water_above1 water_below1 
 delete_atoms group extra
 write_data ${output_filename}_1
 
+
 ### 1. Find all water oxygen that has no neighbor
 group O type 2 
-compute coordO O coord/atom cutoff 1.8 2*3 
+compute coordO O coord/atom cutoff 2 2*3   # changed from 1.8->2.0
 compute         4 O reduce sum c_coordO
 thermo_style    custom step temp pe c_4
 run             0
@@ -179,6 +183,3 @@ write_data ${output_filename}_8
 
 # final outputfile 
 write_data ${output_filename}
-
-
-
