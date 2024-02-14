@@ -14,6 +14,26 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 
 
 class Silica:
+    'class Silica:
+    """
+    A class for generating silica substrates with functionality to perform basic operations.
+
+    This class facilitates the creation and manipulation of silica substrates, offering methods for adjusting 
+    z-positioning, adding vacuum, passivation, thermalization, annealing, and adding water molecules. It supports 
+    construction of both amorphous and quartz silica structures.
+
+    Parameters:
+        lx (float): Length in the x-direction.
+        ly (float): Length in the y-direction.
+        lz (float): Length in the z-direction.
+        output_folder (str): Path to the output folder.
+        input_folder (str): Path to the input folder.
+        vacuum (float): Size of vacuum layer.
+        sio2_potential (str): Potential for silica interactions.
+        sio2_h2o_potential (str): Potential for silica-water interactions.
+        h2o_potential (str): Potential for water interactions.
+        filename (str): Name of the silica data file.
+    """
     def __init__(self, lx=None, ly=None, lz=None, output_folder=None, input_folder=None, 
                 vacuum=None, sio2_potential=None, sio2_h2o_potential=None, 
                 h2o_potential=None,  filename="silica_quartz.data"):
