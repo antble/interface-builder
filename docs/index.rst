@@ -11,7 +11,8 @@ Welcome to interface-builder's documentation!
    :caption: Contents:
 
    main.md
-   api.md
+   example/api.md
+   
 
 
 
