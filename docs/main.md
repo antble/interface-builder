@@ -3,8 +3,9 @@
 ## Generating passivated silica surface
 
 
-```python
+![passivated_silica](_static/passivated_asilica0000.png)
 
+```python
 from interface_builder import Silica
 
 # 4 --> 28.48x28.48x28.48
