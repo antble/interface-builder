@@ -49,6 +49,8 @@ silica.resize_z(shifted_z_silica, 90)
 
 
 
+![passivated_silica](_static/passivated_asilica0001.png)
+
 
 ## Generate surface for heat of immersion calculation 
 ```python 
