@@ -3,6 +3,6 @@
 ## example
 
 ```{eval-rst}
-.. automodule:: example
+.. automodule:: test
    :members:
 ```
