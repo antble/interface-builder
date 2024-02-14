@@ -1,4 +1,6 @@
-# Interface Builder 
+# Interface Builder ![example workflow](https://github.com/antble/interface-builder/actions/workflows/documentation.yml/badge.svg)
+
+
 <p align="center">
   <img src="./water-silica.png" alt="Silica-water system" width="300" height="300">
 </p>
