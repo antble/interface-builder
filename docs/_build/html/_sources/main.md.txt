@@ -43,6 +43,7 @@ for _ in range(1):
 # Shift the origin of silica by 2 angstrom, to avoid dangling atom on the ceiling of the cell. 
 shifted_z_silica  = silica.shift_z_origin(passivated_silica, 2, "silica_shifted_z.data")
 silica.resize_z(shifted_z_silica, 90)
+
 ```
 
 
@@ -83,6 +84,7 @@ dH_imm = silica.get_heat_of_immersion(silica_file,
                                       run=True
                                       )
 print("Calculated heat of immersion:", dH_imm, "J/m^2")
+
 ```
 
 
