@@ -10,7 +10,7 @@ Welcome to interface-builder's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   tests.md
+   main.md
    api.md
 
 
