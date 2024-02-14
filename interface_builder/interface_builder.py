@@ -14,7 +14,6 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 
 
 class Silica:
-    'class Silica:
     """
     A class for generating silica substrates with functionality to perform basic operations.
 
