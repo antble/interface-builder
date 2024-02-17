@@ -85,5 +85,3 @@ dH_imm = silica.get_heat_of_immersion(silica_file,
 print("Calculated heat of immersion:", dH_imm, "J/m^2")
 ```
 
-
-

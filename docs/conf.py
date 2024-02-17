@@ -21,7 +21,7 @@ release = '0.0.1'
 extensions = ['myst_parser',"sphinx.ext.autodoc"]
 
 templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['Thumbs.db', '.DS_Store']
 
 
 
