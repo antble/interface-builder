@@ -14,9 +14,12 @@ jobs:
       - name: Install dependencies
         run: |
           pip install sphinx sphinx_rtd_theme myst_parser
+          pip install lammps_logfile 
+          pip install git+https://git@github.com/chdre/noise-randomized@master#egg=noise_randomized
+          pip install git+https://github.com/henriasv/molecular-builder.git
+
       - name: Sphinx build
         run: |
-          python3 -m pip install -r ./docs/requirements.txt
           sphinx-build docs _build
 
       - name: Deploy to GitHub Pages
