@@ -15,24 +15,41 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 
 class Silica:
     """
-    A class for generating silica substrates with functionality to perform basic operations.
+    A class for generating and manipulating silica substrates.
 
-    This class facilitates the creation and manipulation of silica substrates, offering methods for adjusting 
-    z-positioning, adding vacuum, passivation, thermalization, annealing, and adding water molecules. It supports 
-    construction of both amorphous and quartz silica structures.
+    This class provides functionality for creating silica substrates with customizable dimensions and properties. 
+    It supports various operations such as adjusting positioning, adding vacuum layers, passivation, thermalization, 
+    annealing, and introducing water molecules. Both amorphous and quartz silica structures can be constructed.
 
-    Parameters:
-        lx (float): Length in the x-direction.
-        ly (float): Length in the y-direction.
-        lz (float): Length in the z-direction.
-        output_folder (str): Path to the output folder.
-        input_folder (str): Path to the input folder.
-        vacuum (float): Size of vacuum layer.
-        sio2_potential (str): Potential for silica interactions.
-        sio2_h2o_potential (str): Potential for silica-water interactions.
-        h2o_potential (str): Potential for water interactions.
-        filename (str): Name of the silica data file.
+    :param lx: Length of the substrate in the x-direction.
+    :type lx: float
+    :param ly: Length of the substrate in the y-direction.
+    :type ly: float
+    :param lz: Length of the substrate in the z-direction.
+    :type lz: float
+    :param output_folder: Path to the output folder where generated data will be saved.
+    :type output_folder: str
+    :param input_folder: Path to the input folder containing necessary files.
+    :type input_folder: str
+    :param vacuum: Size of the vacuum layer to be added around the substrate.
+    :type vacuum: float
+    :param sio2_potential: Potential used for silica interactions.
+    :type sio2_potential: str
+    :param sio2_h2o_potential: Potential used for interactions between silica and water.
+    :type sio2_h2o_potential: str
+    :param h2o_potential: Potential used for water interactions.
+    :type h2o_potential: str
+    :param filename: Name of the file to save the silica substrate data.
+    :type filename: str
+
+    Example:
+        Create a silica substrate with dimensions 10x10x5 Angstroms, using LJ potential for silica interactions,
+        and save the data to the 'output' folder.
+
+        >>> substrate = Silica(lx=10, ly=10, lz=5, output_folder='output', 
+        ...                              sio2_potential='SiO2.mod')
     """
+
     def __init__(self, lx=None, ly=None, lz=None, output_folder=None, input_folder=None, 
                 vacuum=None, sio2_potential=None, sio2_h2o_potential=None, 
                 h2o_potential=None,  filename="silica_quartz.data"):
@@ -467,9 +484,11 @@ class Silica:
         input_filepath = os.path.join(self.output_folder, datafile)
         silica_atoms = io.read(input_filepath, format="lammps-data", style="atomic")
         
-        si_dimensions = silica_atoms.get_cell_lengths_and_angles()
+        si_dimensions = silica_atoms.cell.cellpar()
+        si_max_z_position = np.max(silica_atoms.positions[:, 2])
         si_Lx, si_Ly, si_Lz = si_dimensions[:3] 
-        print(si_Lx, si_Ly, si_Lz)
+        print("Lx, Ly, Lz : ",si_Lx, si_Ly, si_Lz)
+        print("Silicon maximum z position = ",si_max_z_position)
         
         # Set default dimensions if not provided:
         # To create a rectangle that is periodic on one side, 1.0 is a buffer to avoid hydronium formation at the start
@@ -479,10 +498,12 @@ class Silica:
         
         # 1. add water slab on top of the silica system 
         if center is None:
-            center = (si_Lx/2, si_Ly/2, (si_Lz-self.vacuum)  + lz/2 + 9)
+            # center = (si_Lx/2, si_Ly/2, (si_Lz - self.vacuum)  + lz/2 + 9)
+            center = (si_Lx/2, si_Ly/2, si_max_z_position + lz/2 + gap)
         dimension = (lx, ly, lz)
-        geometry = BoxGeometry(center, dimension)
         
+        geometry = BoxGeometry(center, dimension)
+        # if run:
         if num_mol is None:
             water = pack_water(volume=lx*ly*lz, geometry=geometry)
         else:
@@ -497,31 +518,56 @@ class Silica:
         water.write(water_slab_filepath , format="lammps-data")
         # 2. add the water slab to the silica surface 
         silica_atoms = io.read(silica_slab_filepath, format="lammps-data", style="atomic")
-        silica_atoms.set_chemical_symbols(np.where(silica_atoms.get_atomic_numbers()==1, "O", "Si"))
-        silica_atoms.center(axis=1)
+        
         water_atoms = io.read(water_slab_filepath , format="lammps-data", style="atomic")
+        h2o_max_z_position = np.min(water_atoms.positions[:, 2]) # get lowest h2o z-position
         
-        # 2.1 run a thermalization on the water first before adding it
-        if thermalized_h2o is not None:
-            water_slab_thermalized_filepath = os.path.join(self.output_folder, "water_slab_thermalized.data")
-            lmp_args = {
-                'input_filename' : water_slab_filepath, 
-                'potential_filename' : self.h2o_potential, 
-                'output_filename' : water_slab_thermalized_filepath,
-                'therm_T' : thermalized_h2o,
-                'therm_temp' : 300, 
-                'output_folder' : self.output_folder
-            }
-            script_path = os.path.join(script_dir, 'script', 'in.thermalize_h2o') 
-            self.execute_lammps(lmp_args, mpirun_n, lmp_exec, script=script_path)
-            # read the thermalized water structure 
-            water_atoms = io.read(water_slab_thermalized_filepath, format="lammps-data", style="atomic")
-        water_atoms.set_chemical_symbols(np.where(water_atoms.get_atomic_numbers()==1, "H", "O"))
-        
+        # Adjust the position of the thermalized water. 
+        dz = h2o_max_z_position-si_max_z_position
+        if dz < 0:
+            # readjust the height dz up and add additional gap of 1 angstrom
+            water_atoms.positions += (0, 0, dz + 3)
+            
+        atom_types = set(atom.symbol for atom in silica_atoms)  # Collect unique atom symbols
+        num_atom_types = len(atom_types)                        # Count the number of unique atom types
+        ## why do i need to read it again, why not use water_slab??? 
+        water_atoms = io.read(water_slab_filepath, format="lammps-data", style="atomic")
+           
+        # Recenter the silica and water along the y axis.
+        silica_atoms.center(axis=1)
+        water_atoms.center(axis=1)
+        # 2.1 Run a thermalization on the water first before adding it
+        if run:
+            if thermalized_h2o is not None:
+                water_slab_thermalized_filepath = os.path.join(self.output_folder, "water_slab_thermalized.data")
+                lmp_args = {
+                    'input_filename' : water_slab_filepath, 
+                    'potential_filename' : self.h2o_potential, 
+                    'output_filename' : water_slab_thermalized_filepath,
+                    'therm_T' : thermalized_h2o,
+                    'therm_temp' : 300, 
+                    'output_folder' : self.output_folder
+                }
+                script_path = os.path.join(script_dir, 'script', 'in.thermalize_h2o') 
+                self.execute_lammps(lmp_args, mpirun_n, lmp_exec, script=script_path)
+                # Read the thermalized water structure 
+                water_atoms = io.read(water_slab_thermalized_filepath, format="lammps-data", style="atomic")
+        if num_atom_types == 2: # To avoid conflict in atomic number when merging the two system
+            silica_atoms.set_chemical_symbols(np.where(silica_atoms.get_atomic_numbers()==1, "O", "Si"))
+            water_atoms.set_chemical_symbols(np.where(water_atoms.get_atomic_numbers()==1, "H", "O"))
+         
         output_filepath = os.path.join(self.output_folder, output_filename)
         system = silica_atoms + water_atoms
         system.write(output_filepath, format="lammps-data")
-        return output_filename
+        print(si_Lx, si_Ly, si_Lz)
+        print(si_max_z_position)
+        
+        # get the final location of each system
+        water_atoms = io.read(water_slab_filepath , format="lammps-data", style="atomic")
+        h2o_max_z_position = np.min(water_atoms.positions[:, 2]) # get lowest h2o z-position
+        
+        return output_filename, si_max_z_position, h2o_max_z_position
+        
         
         
     
@@ -621,6 +667,52 @@ class Silica:
     def get_heat_of_immersion(self, datafile, num_h2o=None,h2o_therm_time=50, sio2_therm_time=50, output_filename="water_silica_system.data", 
                               buffer=0.5, surface_dist=1,
                               mpirun_n=16, lmp_exec_h2o="lmp", lmp_exec_interface="lmp_usc", run=True):
+        """
+        Simulates the heat of immersion of a water-silica system.
+
+        This method constructs a water-silica system, simulates its equilibration, calculates the heat of immersion 
+        based on the energy difference between the hydrated silica slab and the passivated silica slab, and returns 
+        the calculated heat of immersion.
+
+        :param datafile: The filename of the input data file containing the atomic configuration of the silica system.
+        :type datafile: str
+        :param num_h2o: The number of water molecules to include in the water-silica system. Default is None.
+        :type num_h2o: int, optional
+        :param h2o_therm_time: The thermalization time (in ps) for the water system. Default is 50.
+        :type h2o_therm_time: float, optional
+        :param sio2_therm_time: The thermalization time (in ps) for the silica system. Default is 50.
+        :type sio2_therm_time: float, optional
+        :param output_filename: The filename for the output data file containing the water-silica system. Default is "water_silica_system.data".
+        :type output_filename: str, optional
+        :param buffer: The buffer distance (in Angstroms) between the water and silica surfaces. Default is 0.5.
+        :type buffer: float, optional
+        :param surface_dist: The distance (in Angstroms) between the silica surface and the water surface. Default is 1.
+        :type surface_dist: float, optional
+        :param mpirun_n: Number of MPI processes to use. Default is 16.
+        :type mpirun_n: int, optional
+        :param lmp_exec_h2o: The executable name or path for LAMMPS used for the water system simulation. Default is "lmp".
+        :type lmp_exec_h2o: str, optional
+        :param lmp_exec_interface: The executable name or path for LAMMPS used for the interface simulation. Default is "lmp_usc".
+        :type lmp_exec_interface: str, optional
+        :param run: Indicates whether to execute the LAMMPS simulations. Default is True.
+        :type run: bool, optional
+
+        :return: The heat of immersion in Joules per square meter (J/m^2).
+        :rtype: float
+
+        Notes:
+            - This method requires the existence of certain log files in the output folder:
+                - log_silica-thermalized.lammps
+                - log_watersilica-thermalized.lammps
+                - log_water.lammps
+            - The calculated heat of immersion is printed to the console.
+            - The method utilizes several other internal methods such as `_calculate_heat_of_immersion`.
+
+        Example:
+            >>> substrate = Silica(lx=10, ly=10, lz=5, output_folder='output')
+            >>> heat_of_immersion = substrate.get_heat_of_immersion(datafile='silica.data', num_h2o=100)
+            0.5181940280748683
+        """
         from molecular_builder import create_bulk_crystal, write, pack_water
         from molecular_builder.geometry import BoxGeometry, PlaneGeometry
         import ase.io as io
@@ -773,6 +865,37 @@ class Silica:
         
         
     def build_water(self, dimension=None, num_mol=None, output_file=None, buffer=0.5, mpirun_n=1, lmp_exec='lmp', run=False):
+        """
+        Builds a water system with the specified dimensions and number of water molecules.
+
+        Constructs a water system with the specified dimensions and number of water molecules. If dimensions are not 
+        provided, the method uses the number of molecules to determine the system size. The generated water system 
+        is saved to a data file.
+
+        :param dimension: The dimensions (lx, ly, lz) of the water system in Angstroms. If None, the system size is determined 
+                        by the number of molecules. Default is None.
+        :type dimension: tuple[float, float, float], optional
+        :param num_mol: The number of water molecules to include in the water system. Default is None.
+        :type num_mol: int, optional
+        :param output_file: The filename for the output data file containing the water system. Default is None.
+        :type output_file: str, optional
+        :param buffer: The buffer distance (in Angstroms) between the water system and the boundaries of the simulation box. Default is 0.5.
+        :type buffer: float, optional
+        :param mpirun_n: Number of MPI processes to use. Default is 1.
+        :type mpirun_n: int, optional
+        :param lmp_exec: The executable name or path for LAMMPS. Default is "lmp".
+        :type lmp_exec: str, optional
+        :param run: Indicates whether to execute the LAMMPS simulation. Default is False.
+        :type run: bool, optional
+
+        :return: The filename of the output data file containing the water system.
+        :rtype: str
+
+        Example:
+            >>> substrate = Silica(lx=10, ly=10, lz=5, output_folder='output')
+            >>> water_system_file = substrate.build_water(dimension=(10, 10, 5), num_mol=100)
+            'water.data'
+        """
         lx, ly, lz = dimension
         geometry = BoxGeometry(lo_corner=[1,1,1], hi_corner=[lx,ly,lz])
         # system = pack_water(volume=lx*ly*lz, geometry=geometry)
@@ -789,6 +912,35 @@ class Silica:
     
     
     def _calculate_heat_of_immersion(self, A):
+        """
+        Calculates the heat of immersion of a hydrated silica slab.
+
+        This method calculates the heat of immersion, which is the excess energy per unit area required to immerse a 
+        hydrated silica slab into water. It plots the energies of the silica, water-silica, and water slabs over time, 
+        calculates the heat of immersion based on the energy difference, and saves the energy plot as an image file.
+
+        :param A: Surface area of the hydrated silica slab in square nanometers.
+        :type A: float
+
+        :return: The heat of immersion in Joules per square meter (J/m^2).
+        :rtype: float
+
+        Notes:
+            - This method requires the existence of certain log files in the output folder:
+                - log_silica-thermalized.lammps
+                - log_watersilica-thermalized.lammps
+                - log_water.lammps
+            - The calculated heat of immersion is printed to the console.
+
+        Example:
+            >>> substrate = SilicaSubstrate(lx=10, ly=10, lz=5, output_folder='output')
+            >>> heat_of_immersion = substrate._calculate_heat_of_immersion(A=2.1359)
+            Water system energy: -1298.03
+            Hydrated silica slab: -1320.52
+            Surface-terminated silica slab: -1306.18
+            >>> print(heat_of_immersion)
+            0.5181940280748683
+        """
         import matplotlib.pyplot as plt
         plt.subplot(131)
         # Get the energy of the passivated silica
@@ -832,3 +984,145 @@ class Silica:
         Himm = abs(Himm*(1.60218e-19)/(1e-9)**2) # eV/nm^2-> J/m^2
         return Himm
     
+     def get_coordination(self, filename):
+        """
+        Analyzes the coordination of atoms in the substrate based on a given data file.
+
+        Reads the atomic configuration data from the specified filename, replaces 'H' atoms with 'O' atoms
+        (silica and water respectively), calculates the coordination of each atom, and identifies defects in the 
+        substrate based on coordination count.
+
+        :param filename: The filename of the input data file containing atomic configuration.
+        :type filename: str
+
+        :return: A tuple containing the number of defects for 'O' atoms (with less than 2 neighbors)
+                and 'Si' atoms (with less than 4 neighbors).
+        :rtype: tuple[int, int]
+
+        Example:
+            >>> substrate = Silica(lx=10, ly=10, lz=5, output_folder='output')
+            >>> substrate.get_coordination(filename='amorphous.data')
+            (10, 5)
+        """
+        input_filepath = os.path.join(self.output_folder, filename)
+        atoms = io.read(input_filepath, format="lammps-data", style="atomic")
+              
+        # Loop through the array and replace 'H' with the new element
+        atoms.symbols = ['O' if atom == 'H' else 'Si' for atom in atoms.symbols]
+
+        cutoff_radius = 2
+        # Get the neighbor list
+        values = neighbor_list('ijd', atoms, cutoff_radius)
+        # Initialize a dictionary to store coordination counts for each atom
+        coordination_counts = {}
+        
+        # Loop through each atom and count its neighbors
+        for i in range(len(atoms)):
+            coordination_counts[i] = 0
+            
+        for indx in range(len(values[0])):
+            atom_i = values[0][indx]
+            coordination_counts[atom_i] += 1
+            
+        
+        element_symbols = atoms.get_chemical_symbols()
+        
+        defect_O = 0  
+        defect_Si = 0 
+        for atom_index, coordination in coordination_counts.items():
+            if coordination != 2 and element_symbols[atom_index] == 'O':
+                defect_O += 1 
+            elif coordination != 4 and element_symbols[atom_index] == 'Si':
+                defect_Si += 1
+        print(f"Defects for O: {defect_O} for < 2 neighbors")
+        print(f"Defects for Si: {defect_Si} for < 4 neighbors")
+        return defect_O, defect_Si
+    
+    
+    def shift_z_origin(self, filename, z_shift=0, output_filename="silica_shifted_z.data"):
+        """
+        Shifts the origin of the substrate in the z-direction by a specified amount.
+
+        Reads the atomic configuration data from the specified filename, shifts the positions of all atoms in the z-direction
+        by the specified amount, and writes the modified configuration data to a new file with the specified output filename.
+
+        :param filename: The filename of the input data file containing atomic configuration.
+        :type filename: str
+        :param z_shift: The amount by which to shift the origin in the z-direction. Default is 0.
+        :type z_shift: float, optional
+        :param output_filename: The filename for the output data file with the shifted origin. Default is "silica_shifted_z.data".
+        :type output_filename: str, optional
+
+        :return: The filename of the output data file with the shifted origin.
+        :rtype: str
+
+        Example:
+            >>> substrate = Silica(lx=10, ly=10, lz=5, output_folder='output')
+            >>> substrate.shift_z_origin('silica_passivated.data', z_shift=2.0)
+            "silica_shifted_z.data"
+        """
+        input_filepath = os.path.join(self.output_folder, filename)
+        output_filepath = os.path.join(self.output_folder, output_filename)
+          
+        atoms = io.read(input_filepath, format="lammps-data", style="atomic")
+        atoms.positions += (0, 0, z_shift)
+        atoms.wrap() # always wrap all shifted system
+        
+        atoms.write(output_filepath, format="lammps-data")
+        return output_filename
+    
+    def replicate(self, dimension, input_filename, output_filename, mpirun_n=1, lmp_exec="lmp", run=True):
+        """
+        Replicates the atomic configuration of the substrate in all dimensions.
+
+        Replicates the atomic configuration specified by the input data file along the x, y, and z dimensions to create 
+        a larger substrate. The replicated configuration is saved to a new file with the specified output filename.
+
+        :param dimension: The dimensions (lx, ly, lz) of the replication in Angstroms.
+        :type dimension: tuple[float, float, float]
+        :param input_filename: The filename of the input data file containing the atomic configuration to be replicated.
+        :type input_filename: str
+        :param output_filename: The filename for the output data file with the replicated configuration.
+        :type output_filename: str
+        :param mpirun_n: Number of MPI processes to use. Default is 1.
+        :type mpirun_n: int, optional
+        :param lmp_exec: The executable name or path for LAMMPS. Default is "lmp".
+        :type lmp_exec: str, optional
+        :param run: Indicates whether to execute the LAMMPS simulation after replication. Default is True.
+        :type run: bool, optional
+
+        :return: The filename of the output data file with the replicated configuration.
+        :rtype: str
+
+        Example:
+            >>> substrate = Silica(lx=10, ly=10, lz=5, output_folder='output')
+            >>> substrate.replicate(dimension=(20, 20, 10), input_filename='data.lmp', output_filename='replicated_data.lmp')
+            'replicated_data.lmp'
+        """
+        lx, ly, lz = dimension 
+        input_filepath = os.path.join(self.output_folder, input_filename)
+        atoms = io.read(input_filepath, format="lammps-data", style="atomic")
+        atom_types = set(atom.symbol for atom in atoms)     # Collect unique atom symbols
+        num_atom_types = len(atom_types)                    # Count the number of unique atom types
+        if num_atom_types == 2:
+            potential_filename = self.sio2_potential
+        else:
+            potential_filename = self.sio2_h2o_potential
+            
+        output_filepath = os.path.join(self.output_folder, output_filename)
+        lmp_args = {
+            'input_filename' : input_filepath, 
+            'output_filename' : output_filepath,
+            'output_folder' : self.output_folder,
+            'potential_filename' : potential_filename,
+            'lx' : lx, 
+            'ly' : ly, 
+            'lz' : lz
+        }
+        if run:
+            if num_atom_types == 2: # To avoid conflict in pair_style 
+                script_path = os.path.join(script_dir, 'script', 'in.replicate_sio2') 
+            else:
+                script_path = os.path.join(script_dir, 'script', 'in.replicate_sio2h2o') 
+            self.execute_lammps(lmp_args, mpirun_n, lmp_exec="lmp_usc", script=script_path)
+        return output_filename
