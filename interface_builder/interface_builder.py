@@ -984,7 +984,7 @@ class Silica:
         Himm = abs(Himm*(1.60218e-19)/(1e-9)**2) # eV/nm^2-> J/m^2
         return Himm
     
-     def get_coordination(self, filename):
+    def get_coordination(self, filename):
         """
         Analyzes the coordination of atoms in the substrate based on a given data file.
 
