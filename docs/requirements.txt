@@ -5,4 +5,4 @@ pytz
 myst-parser
 lammps_logfile
 git+https://git@github.com/chdre/noise-randomized@master#egg=noise_randomized
-molecular_builder
+git+https://github.com/henriasv/molecular-builder.git
