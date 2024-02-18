@@ -3,5 +3,4 @@ sphinx_rtd_theme
 attrs
 pytz
 myst-parser
-lammps_logfile 
-https://github.com/antble/interface-builder.git
+lammps_logfile
