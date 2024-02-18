@@ -11,8 +11,7 @@ Welcome to interface-builder's documentation!
    :caption: Contents:
 
    main.md
-   example/API_test.rst
-   example/api.md
+   example/API.md
    
 
 

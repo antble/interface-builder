@@ -1,8 +1,0 @@
-sphinx
-sphinx_rtd_theme
-attrs
-pytz
-myst-parser
-lammps_logfile
-git+https://git@github.com/chdre/noise-randomized@master#egg=noise_randomized
-git+https://github.com/henriasv/molecular-builder.git
