@@ -43,7 +43,7 @@ class Silica:
     :type filename: str
 
     Example:
-        Create a silica substrate with dimensions 10x10x5 Angstroms, using LJ potential for silica interactions,
+        Create a silica substrate with dimensions 10x10x5 Angstroms, using Vashishta potential for silica interactions,
         and save the data to the 'output' folder.
 
         >>> substrate = Silica(lx=10, ly=10, lz=5, output_folder='output', 
