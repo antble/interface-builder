@@ -1,8 +1,7 @@
 # API reference
 
-## example
 
 ```{eval-rst}
-.. automodule:: example
+.. automodule:: interface_builder.interface_builder
    :members:
 ```

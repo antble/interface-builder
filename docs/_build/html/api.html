@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API reference &mdash; interface-builder 0.0.1 documentation</title>
+  <title>API reference &mdash; interface-builder 0.0.2 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=f6245a2f"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Interface Builder" href="main.html" /> 
+    <link rel="prev" title="System for water contact angle simulation" href="example/water_contact_angle.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -25,21 +28,57 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> interface-builder
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            interface-builder
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="interface_builder/main.html">Interface Builder Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interface_builder/liquid-solid-interface.html">Liquid-Solid Interface Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interface_builder/solid-solid-interface.html">Solid-Solid Interface Builder Introduction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Interface Builder Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="example/adding_vacuum.html">Adding Vacuum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example/passivated_surface.html">Passivated Amorphous Silica Surface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example/heat_of_immersion.html">Surface for heat of immersion calculation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example/water_contact_angle.html">System for water contact angle simulation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="main.html">Interface Builder</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-example">example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface_builder.interface_builder.Silica"><code class="docutils literal notranslate"><span class="pre">Silica</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#interface_builder.interface_builder.Silica.add_vacuum"><code class="docutils literal notranslate"><span class="pre">Silica.add_vacuum()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interface_builder.interface_builder.Silica.add_water"><code class="docutils literal notranslate"><span class="pre">Silica.add_water()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interface_builder.interface_builder.Silica.anneal"><code class="docutils literal notranslate"><span class="pre">Silica.anneal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interface_builder.interface_builder.Silica.build_amorphous"><code class="docutils literal notranslate"><span class="pre">Silica.build_amorphous()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interface_builder.interface_builder.Silica.build_quartz"><code class="docutils literal notranslate"><span class="pre">Silica.build_quartz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interface_builder.interface_builder.Silica.build_water"><code class="docutils literal notranslate"><span class="pre">Silica.build_water()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interface_builder.interface_builder.Silica.execute_lammps"><code class="docutils literal notranslate"><span class="pre">Silica.execute_lammps()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interface_builder.interface_builder.Silica.get_coordination"><code class="docutils literal notranslate"><span class="pre">Silica.get_coordination()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interface_builder.interface_builder.Silica.get_heat_of_immersion"><code class="docutils literal notranslate"><span class="pre">Silica.get_heat_of_immersion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interface_builder.interface_builder.Silica.get_silanol"><code class="docutils literal notranslate"><span class="pre">Silica.get_silanol()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interface_builder.interface_builder.Silica.minimize_sio2"><code class="docutils literal notranslate"><span class="pre">Silica.minimize_sio2()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interface_builder.interface_builder.Silica.passivate"><code class="docutils literal notranslate"><span class="pre">Silica.passivate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interface_builder.interface_builder.Silica.replicate"><code class="docutils literal notranslate"><span class="pre">Silica.replicate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interface_builder.interface_builder.Silica.resize_z"><code class="docutils literal notranslate"><span class="pre">Silica.resize_z()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interface_builder.interface_builder.Silica.set_silanol"><code class="docutils literal notranslate"><span class="pre">Silica.set_silanol()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interface_builder.interface_builder.Silica.shift_z_origin"><code class="docutils literal notranslate"><span class="pre">Silica.shift_z_origin()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interface_builder.interface_builder.Silica.thermalize"><code class="docutils literal notranslate"><span class="pre">Silica.thermalize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interface_builder.interface_builder.Silica.thermalize_passivated"><code class="docutils literal notranslate"><span class="pre">Silica.thermalize_passivated()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -57,10 +96,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>API reference</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API reference</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/api.md.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/API.md.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -68,24 +107,537 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="api-reference">
-<h1>API reference<a class="headerlink" href="#api-reference" title="Permalink to this heading"></a></h1>
-<section id="module-example">
-<span id="example"></span><h2>example<a class="headerlink" href="#module-example" title="Permalink to this heading"></a></h2>
-</section>
+  <section class="tex2jax_ignore mathjax_ignore" id="module-interface_builder.interface_builder">
+<span id="api-reference"></span><h1>API reference<a class="headerlink" href="#module-interface_builder.interface_builder" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="interface_builder.interface_builder.Silica">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">interface_builder.interface_builder.</span></span><span class="sig-name descname"><span class="pre">Silica</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ly</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vacuum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sio2_potential</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sio2_h2o_potential</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h2o_potential</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'silica_quartz.data'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface_builder.interface_builder.Silica" title="Permalink to this definition"></a></dt>
+<dd><p>A class for generating and manipulating silica substrates.</p>
+<p>This class provides functionality for creating silica substrates with customizable dimensions and properties.
+It supports various operations such as adjusting positioning, adding vacuum layers, passivation, thermalization,
+annealing, and introducing water molecules. Both amorphous and quartz silica structures can be constructed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lx</strong> (<em>float</em>) – Length of the substrate in the x-direction.</p></li>
+<li><p><strong>ly</strong> (<em>float</em>) – Length of the substrate in the y-direction.</p></li>
+<li><p><strong>lz</strong> (<em>float</em>) – Length of the substrate in the z-direction.</p></li>
+<li><p><strong>output_folder</strong> (<em>str</em>) – Path to the output folder where generated data will be saved.</p></li>
+<li><p><strong>input_folder</strong> (<em>str</em>) – Path to the input folder containing necessary files.</p></li>
+<li><p><strong>vacuum</strong> (<em>float</em>) – Size of the vacuum layer to be added around the substrate.</p></li>
+<li><p><strong>sio2_potential</strong> (<em>str</em>) – Potential used for silica interactions.</p></li>
+<li><p><strong>sio2_h2o_potential</strong> (<em>str</em>) – Potential used for interactions between silica and water.</p></li>
+<li><p><strong>h2o_potential</strong> (<em>str</em>) – Potential used for water interactions.</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – Name of the file to save the silica substrate data.</p></li>
+</ul>
+</dd>
+</dl>
+<dl>
+<dt>Example:</dt><dd><p>Create a silica substrate with dimensions 10x10x5 Angstroms, using Vashishta potential for silica interactions,
+and save the data to the ‘output’ folder.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">substrate</span> <span class="o">=</span> <span class="n">Silica</span><span class="p">(</span><span class="n">lx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ly</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lz</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">output_folder</span><span class="o">=</span><span class="s1">&#39;output&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                             <span class="n">sio2_potential</span><span class="o">=</span><span class="s1">&#39;SiO2.mod&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="interface_builder.interface_builder.Silica.add_vacuum">
+<span class="sig-name descname"><span class="pre">add_vacuum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datafile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">which</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface_builder.interface_builder.Silica.add_vacuum" title="Permalink to this definition"></a></dt>
+<dd><p>Add vacuum space to the z-dimension of the system in the input data file.
+This method adds vacuum space to the z-dimension of the system in the input data file, effectively increasing its size along the z-axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datafile</strong> (<em>str</em>) – The filename of the input data file containing the system.</p></li>
+<li><p><strong>vacuum</strong> (<em>float</em>) – The amount of vacuum space to add to the z-dimension of the system.</p></li>
+<li><p><strong>output_filename</strong> (<em>str</em><em> or </em><em>None</em>) – (Optional) The filename for the output data file with the added vacuum space. If not provided, the input data file is overwritten. Default is None.</p></li>
+<li><p><strong>overwrite</strong> (<em>bool</em>) – (Optional) Whether to overwrite the input data file with the system containing added vacuum space. If False, a new output file with the added vacuum space is created. Default is False.</p></li>
+<li><p><strong>run</strong> (<em>bool</em>) – (Optional) Whether to perform the operation of adding vacuum space. Default is True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The filename of the data file containing the system with added vacuum space.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface_builder.interface_builder.Silica.add_water">
+<span class="sig-name descname"><span class="pre">add_water</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datafile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimensions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_mol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'water-silica_system-new.data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thermalized_h2o</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rectangle'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpirun_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lmp_exec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lmp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface_builder.interface_builder.Silica.add_water" title="Permalink to this definition"></a></dt>
+<dd><p>Add a water slab on top of a silica system.
+This method adds a water slab on top of a silica system and runs a thermalization simulation if specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datafile</strong> (<em>str</em>) – The filename of the input data file containing the silica system.</p></li>
+<li><p><strong>dimensions</strong> (<em>tuple</em>) – The dimensions of the silica system in the format (lx, ly, lz).</p></li>
+<li><p><strong>num_molecules</strong> (<em>int</em><em> or </em><em>None</em>) – (Optional) The number of water molecules to add. Default is None.</p></li>
+<li><p><strong>thermalized_water</strong> (<em>float</em><em> or </em><em>None</em>) – (Optional) The temperature for thermalization of water molecules. Default is None.</p></li>
+<li><p><strong>geometry</strong> (<em>str</em>) – (Optional) The geometry of the water slab. Default is “rectangle”.</p></li>
+<li><p><strong>mpirun_n</strong> (<em>int</em>) – (Optional) The number of MPI processes to use for the simulation. Default is 4.</p></li>
+<li><p><strong>lmp_exec</strong> (<em>str</em>) – (Optional) The LAMMPS executable path or command. Default is “lmp”.</p></li>
+<li><p><strong>run</strong> (<em>bool</em>) – (Optional) Whether to run the simulation. Default is True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The filename of the output data file containing the silica-water system.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface_builder.interface_builder.Silica.anneal">
+<span class="sig-name descname"><span class="pre">anneal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datafile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anneal_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpirun_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lmp_exec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lmp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface_builder.interface_builder.Silica.anneal" title="Permalink to this definition"></a></dt>
+<dd><p>Run a basic annealing procedure on the system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datafile</strong> (<em>str</em>) – The filename of the input data file containing the system configuration.</p></li>
+<li><p><strong>anneal_time</strong> (<em>float</em>) – The duration of the annealing procedure.</p></li>
+<li><p><strong>run</strong> (<em>bool</em>) – (Optional) Whether to run the annealing procedure. Default is True.</p></li>
+<li><p><strong>mpirun_n</strong> (<em>int</em>) – (Optional) The number of MPI processes to use for the annealing simulation. Default is 4.</p></li>
+<li><p><strong>lmp_exec</strong> (<em>str</em>) – (Optional) The LAMMPS executable path or command. Default is ‘lmp’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The filename of the output data file containing the annealed system configuration.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface_builder.interface_builder.Silica.build_amorphous">
+<span class="sig-name descname"><span class="pre">build_amorphous</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mpirun_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lmp_exec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lmp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cristobalite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface_builder.interface_builder.Silica.build_amorphous" title="Permalink to this definition"></a></dt>
+<dd><p>Build an amorphous system using molecular dynamics simulation.
+This method constructs an amorphous system by annealing the beta cristobalite structure using molecular dynamics simulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mpirun_n</strong> (<em>int</em><em> or </em><em>None</em>) – (Optional) The number of MPI processes to use for the simulation.</p></li>
+<li><p><strong>lmp_exec</strong> (<em>str</em>) – (Optional) The LAMMPS executable path or command. Default is “lmp”.</p></li>
+<li><p><strong>cristobalite</strong> (<em>str</em><em> or </em><em>None</em>) – (Optional) The filename of the beta cristobalite structure data file. If not provided, it will be generated.</p></li>
+<li><p><strong>cluster</strong> (<em>str</em><em> or </em><em>None</em>) – (Optional) Cluster information for parallel execution. Default is None.</p></li>
+<li><p><strong>run</strong> (<em>bool</em>) – (Optional) Whether to run the simulation. Default is True.</p></li>
+<li><p><strong>partition</strong> (<em>str</em><em> or </em><em>None</em>) – (Optional) The partition information for parallel execution. Default is None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The filename of the output amorphous system data file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface_builder.interface_builder.Silica.build_quartz">
+<span class="sig-name descname"><span class="pre">build_quartz</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#interface_builder.interface_builder.Silica.build_quartz" title="Permalink to this definition"></a></dt>
+<dd><p>Create a quartz silica slab.
+Process the quartz crystal structure and write it to a file in LAMMPS data format.
+see: <a class="reference external" href="https://henriasv.github.io/molecular-builder">https://henriasv.github.io/molecular-builder</a> for more info.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The filename of the output LAMMPS data file.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface_builder.interface_builder.Silica.build_water">
+<span class="sig-name descname"><span class="pre">build_water</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dimension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_mol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpirun_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lmp_exec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lmp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface_builder.interface_builder.Silica.build_water" title="Permalink to this definition"></a></dt>
+<dd><p>Builds a water system with the specified dimensions and number of water molecules.</p>
+<p>Constructs a water system with the specified dimensions and number of water molecules. If dimensions are not
+provided, the method uses the number of molecules to determine the system size. The generated water system
+is saved to a data file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dimension</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – The dimensions (lx, ly, lz) of the water system in Angstroms. If None, the system size is determined
+by the number of molecules. Default is None.</p></li>
+<li><p><strong>num_mol</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of water molecules to include in the water system. Default is None.</p></li>
+<li><p><strong>output_file</strong> (<em>str</em><em>, </em><em>optional</em>) – The filename for the output data file containing the water system. Default is None.</p></li>
+<li><p><strong>buffer</strong> (<em>float</em><em>, </em><em>optional</em>) – The buffer distance (in Angstroms) between the water system and the boundaries of the simulation box. Default is 0.5.</p></li>
+<li><p><strong>mpirun_n</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of MPI processes to use. Default is 1.</p></li>
+<li><p><strong>lmp_exec</strong> (<em>str</em><em>, </em><em>optional</em>) – The executable name or path for LAMMPS. Default is “lmp”.</p></li>
+<li><p><strong>run</strong> (<em>bool</em><em>, </em><em>optional</em>) – Indicates whether to execute the LAMMPS simulation. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The filename of the output data file containing the water system.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<dl>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">substrate</span> <span class="o">=</span> <span class="n">Silica</span><span class="p">(</span><span class="n">lx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ly</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lz</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">output_folder</span><span class="o">=</span><span class="s1">&#39;output&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">water_system_file</span> <span class="o">=</span> <span class="n">substrate</span><span class="o">.</span><span class="n">build_water</span><span class="p">(</span><span class="n">dimension</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">num_mol</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="go">&#39;water.data&#39;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface_builder.interface_builder.Silica.execute_lammps">
+<span class="sig-name descname"><span class="pre">execute_lammps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lmps_args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpirun_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lmp_exec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lmp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">script</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slurm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface_builder.interface_builder.Silica.execute_lammps" title="Permalink to this definition"></a></dt>
+<dd><p>Execute a LAMMPS simulation with the given arguments.
+This method executes a LAMMPS simulation using the specified LAMMPS executable and input script, along with additional arguments provided in the lmps_args dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lmps_args</strong> (<em>dict</em>) – A dictionary containing the LAMMPS variables and their corresponding values.</p></li>
+<li><p><strong>mpirun_n</strong> (<em>int</em>) – (Optional) The number of MPI processes to use for the simulation. Default is 4.</p></li>
+<li><p><strong>lmp_exec</strong> (<em>str</em>) – (Optional) The path to the LAMMPS executable. Default is ‘lmp’.</p></li>
+<li><p><strong>script</strong> (<em>str</em><em> or </em><em>None</em>) – (Optional) The path to the input script for LAMMPS. If provided, this takes precedence over the slurm parameter. Default is None.</p></li>
+<li><p><strong>slurm</strong> (<em>bool</em>) – (Optional) If True, run the simulation using Slurm on a HPC cluster. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface_builder.interface_builder.Silica.get_coordination">
+<span class="sig-name descname"><span class="pre">get_coordination</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface_builder.interface_builder.Silica.get_coordination" title="Permalink to this definition"></a></dt>
+<dd><p>Analyzes the coordination of atoms in the substrate based on a given data file.</p>
+<p>Reads the atomic configuration data from the specified filename, replaces ‘H’ atoms with ‘O’ atoms
+(silica and water respectively), calculates the coordination of each atom, and identifies defects in the
+substrate based on coordination count.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The filename of the input data file containing atomic configuration.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the number of defects for ‘O’ atoms (with less than 2 neighbors)
+and ‘Si’ atoms (with less than 4 neighbors).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[int, int]</p>
+</dd>
+</dl>
+<dl>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">substrate</span> <span class="o">=</span> <span class="n">Silica</span><span class="p">(</span><span class="n">lx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ly</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lz</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">output_folder</span><span class="o">=</span><span class="s1">&#39;output&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">substrate</span><span class="o">.</span><span class="n">get_coordination</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;amorphous.data&#39;</span><span class="p">)</span>
+<span class="go">(10, 5)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface_builder.interface_builder.Silica.get_heat_of_immersion">
+<span class="sig-name descname"><span class="pre">get_heat_of_immersion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datafile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_h2o</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h2o_therm_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sio2_therm_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'water_silica_system.data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surface_dist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpirun_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lmp_exec_h2o</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lmp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lmp_exec_interface</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lmp_usc'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface_builder.interface_builder.Silica.get_heat_of_immersion" title="Permalink to this definition"></a></dt>
+<dd><p>Simulates the heat of immersion of a water-silica system.</p>
+<p>This method constructs a water-silica system, simulates its equilibration, calculates the heat of immersion
+based on the energy difference between the hydrated silica slab and the passivated silica slab, and returns
+the calculated heat of immersion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datafile</strong> (<em>str</em>) – The filename of the input data file containing the atomic configuration of the silica system.</p></li>
+<li><p><strong>num_h2o</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of water molecules to include in the water-silica system. Default is None.</p></li>
+<li><p><strong>h2o_therm_time</strong> (<em>float</em><em>, </em><em>optional</em>) – The thermalization time (in ps) for the water system. Default is 50.</p></li>
+<li><p><strong>sio2_therm_time</strong> (<em>float</em><em>, </em><em>optional</em>) – The thermalization time (in ps) for the silica system. Default is 50.</p></li>
+<li><p><strong>output_filename</strong> (<em>str</em><em>, </em><em>optional</em>) – The filename for the output data file containing the water-silica system. Default is “water_silica_system.data”.</p></li>
+<li><p><strong>buffer</strong> (<em>float</em><em>, </em><em>optional</em>) – The buffer distance (in Angstroms) between the water and silica surfaces. Default is 0.5.</p></li>
+<li><p><strong>surface_dist</strong> (<em>float</em><em>, </em><em>optional</em>) – The distance (in Angstroms) between the silica surface and the water surface. Default is 1.</p></li>
+<li><p><strong>mpirun_n</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of MPI processes to use. Default is 16.</p></li>
+<li><p><strong>lmp_exec_h2o</strong> (<em>str</em><em>, </em><em>optional</em>) – The executable name or path for LAMMPS used for the water system simulation. Default is “lmp”.</p></li>
+<li><p><strong>lmp_exec_interface</strong> (<em>str</em><em>, </em><em>optional</em>) – The executable name or path for LAMMPS used for the interface simulation. Default is “lmp_usc”.</p></li>
+<li><p><strong>run</strong> (<em>bool</em><em>, </em><em>optional</em>) – Indicates whether to execute the LAMMPS simulations. Default is True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The heat of immersion in Joules per square meter (J/m^2).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<dl>
+<dt>Notes:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>This method requires the existence of certain log files in the output folder:</dt><dd><ul>
+<li><p>log_silica-thermalized.lammps</p></li>
+<li><p>log_watersilica-thermalized.lammps</p></li>
+<li><p>log_water.lammps</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>The calculated heat of immersion is printed to the console.</p></li>
+<li><p>The method utilizes several other internal methods such as <cite>_calculate_heat_of_immersion</cite>.</p></li>
+</ul>
+</dd>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">substrate</span> <span class="o">=</span> <span class="n">Silica</span><span class="p">(</span><span class="n">lx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ly</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lz</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">output_folder</span><span class="o">=</span><span class="s1">&#39;output&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">heat_of_immersion</span> <span class="o">=</span> <span class="n">substrate</span><span class="o">.</span><span class="n">get_heat_of_immersion</span><span class="p">(</span><span class="n">datafile</span><span class="o">=</span><span class="s1">&#39;silica.data&#39;</span><span class="p">,</span> <span class="n">num_h2o</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="go">0.5181940280748683</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface_builder.interface_builder.Silica.get_silanol">
+<span class="sig-name descname"><span class="pre">get_silanol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datafile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface_builder.interface_builder.Silica.get_silanol" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the density of silanol groups in the silica system.</p>
+<p>This method calculates the density of silanol groups in the silica system described by the provided datafile.
+Silanol groups are hydroxyl (-OH) functional groups attached to the silica surface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>datafile</strong> (<em>str</em>) – The filename of the input data file containing the silica system.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The density of silanol groups in the silica system, measured in silanol groups per square nanometer (nm^-2).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface_builder.interface_builder.Silica.minimize_sio2">
+<span class="sig-name descname"><span class="pre">minimize_sio2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datafile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpirun_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lmp_exec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lmp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface_builder.interface_builder.Silica.minimize_sio2" title="Permalink to this definition"></a></dt>
+<dd><p>Run a minimization procedure to optimize the structure of silica.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datafile</strong> (<em>str</em>) – The filename of the input data file containing the initial structure of silica.</p></li>
+<li><p><strong>mpirun_n</strong> (<em>int</em>) – (Optional) The number of MPI processes to use for the minimization simulation. Default is 4.</p></li>
+<li><p><strong>lmp_exec</strong> (<em>str</em>) – (Optional) The LAMMPS executable path or command. Default is ‘lmp’.</p></li>
+<li><p><strong>run</strong> (<em>bool</em>) – (Optional) Whether to run the minimization simulation. Default is True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The filename of the output data file containing the minimized silica structure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface_builder.interface_builder.Silica.passivate">
+<span class="sig-name descname"><span class="pre">passivate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datafile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passivation_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">water_thickness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpirun_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lmp_exec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lmp_mpi'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface_builder.interface_builder.Silica.passivate" title="Permalink to this definition"></a></dt>
+<dd><p>Run a passivation simulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datafile</strong> (<em>str</em>) – The filename of the input data file.</p></li>
+<li><p><strong>passivation_time</strong> (<em>float</em>) – The duration of the passivation simulation.</p></li>
+<li><p><strong>output_file</strong> (<em>str</em>) – The filename for the output data file.</p></li>
+<li><p><strong>thickness</strong> (<em>int</em>) – (Optional) The thickness of the water slab to be immersed in the silica surface. Default is 10.</p></li>
+<li><p><strong>run</strong> (<em>bool</em>) – (Optional) Whether to run the passivation simulation. Default is True.</p></li>
+<li><p><strong>mpirun_n</strong> (<em>int</em>) – (Optional) The number of MPI processes to use for the passivation simulation. Default is 4.</p></li>
+<li><p><strong>lmp_exec</strong> (<em>str</em>) – (Optional) The LAMMPS executable path or command. Default is ‘lmp_mpi’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The filename of the output data file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface_builder.interface_builder.Silica.replicate">
+<span class="sig-name descname"><span class="pre">replicate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dimension</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpirun_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lmp_exec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lmp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface_builder.interface_builder.Silica.replicate" title="Permalink to this definition"></a></dt>
+<dd><p>Replicates the atomic configuration of the substrate in all dimensions.</p>
+<p>Replicates the atomic configuration specified by the input data file along the x, y, and z dimensions to create
+a larger substrate. The replicated configuration is saved to a new file with the specified output filename.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dimension</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>]</em>) – The dimensions (lx, ly, lz) of the replication in Angstroms.</p></li>
+<li><p><strong>input_filename</strong> (<em>str</em>) – The filename of the input data file containing the atomic configuration to be replicated.</p></li>
+<li><p><strong>output_filename</strong> (<em>str</em>) – The filename for the output data file with the replicated configuration.</p></li>
+<li><p><strong>mpirun_n</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of MPI processes to use. Default is 1.</p></li>
+<li><p><strong>lmp_exec</strong> (<em>str</em><em>, </em><em>optional</em>) – The executable name or path for LAMMPS. Default is “lmp”.</p></li>
+<li><p><strong>run</strong> (<em>bool</em><em>, </em><em>optional</em>) – Indicates whether to execute the LAMMPS simulation after replication. Default is True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The filename of the output data file with the replicated configuration.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<dl>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">substrate</span> <span class="o">=</span> <span class="n">Silica</span><span class="p">(</span><span class="n">lx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ly</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lz</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">output_folder</span><span class="o">=</span><span class="s1">&#39;output&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">substrate</span><span class="o">.</span><span class="n">replicate</span><span class="p">(</span><span class="n">dimension</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">input_filename</span><span class="o">=</span><span class="s1">&#39;data.lmp&#39;</span><span class="p">,</span> <span class="n">output_filename</span><span class="o">=</span><span class="s1">&#39;replicated_data.lmp&#39;</span><span class="p">)</span>
+<span class="go">&#39;replicated_data.lmp&#39;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface_builder.interface_builder.Silica.resize_z">
+<span class="sig-name descname"><span class="pre">resize_z</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datafile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface_builder.interface_builder.Silica.resize_z" title="Permalink to this definition"></a></dt>
+<dd><p>Resize the z-dimension of the system in the input data file.
+This method resizes the z-dimension of the system in the input data file to the specified value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datafile</strong> (<em>str</em>) – The filename of the input data file containing the system.</p></li>
+<li><p><strong>z_value</strong> (<em>float</em>) – The new value for the z-dimension of the system.</p></li>
+<li><p><strong>output_filename</strong> (<em>str</em><em> or </em><em>None</em>) – (Optional) The filename for the output data file with the resized system. If not provided, the input data file is overwritten. Default is None.</p></li>
+<li><p><strong>overwrite</strong> (<em>bool</em>) – (Optional) Whether to overwrite the input data file with the resized system. If False, a new output file with the resized system is created. Default is False.</p></li>
+<li><p><strong>run</strong> (<em>bool</em>) – (Optional) Whether to perform the resizing operation. Default is True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The filename of the data file containing the resized system.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface_builder.interface_builder.Silica.set_silanol">
+<span class="sig-name descname"><span class="pre">set_silanol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">silanol_concentration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delete_oxygen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface_builder.interface_builder.Silica.set_silanol" title="Permalink to this definition"></a></dt>
+<dd><p>Set the concentration of silanol groups in the silica structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>silanol_concentration</strong> (<em>float</em>) – The concentration of silanol groups to set in the structure.</p></li>
+<li><p><strong>input_filename</strong> (<em>str</em>) – The filename of the input structure file.</p></li>
+<li><p><strong>output_filename</strong> (<em>str</em>) – The filename for the output structure file with modified silanol concentration.</p></li>
+<li><p><strong>lmp_exec</strong> (<em>str</em>) – (Optional) The LAMMPS executable path or command. Default is “lmp”.</p></li>
+<li><p><strong>delete_oxygen</strong> (<em>bool</em>) – (Optional) Whether to delete oxygen atoms. Default is True.</p></li>
+<li><p><strong>run</strong> (<em>bool</em>) – (Optional) Whether to run the simulation. Default is True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The filename of the output structure file with modified silanol concentration.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface_builder.interface_builder.Silica.shift_z_origin">
+<span class="sig-name descname"><span class="pre">shift_z_origin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_shift</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'silica_shifted_z.data'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface_builder.interface_builder.Silica.shift_z_origin" title="Permalink to this definition"></a></dt>
+<dd><p>Shifts the origin of the substrate in the z-direction by a specified amount.</p>
+<p>Reads the atomic configuration data from the specified filename, shifts the positions of all atoms in the z-direction
+by the specified amount, and writes the modified configuration data to a new file with the specified output filename.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – The filename of the input data file containing atomic configuration.</p></li>
+<li><p><strong>z_shift</strong> (<em>float</em><em>, </em><em>optional</em>) – The amount by which to shift the origin in the z-direction. Default is 0.</p></li>
+<li><p><strong>output_filename</strong> (<em>str</em><em>, </em><em>optional</em>) – The filename for the output data file with the shifted origin. Default is “silica_shifted_z.data”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The filename of the output data file with the shifted origin.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<dl>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">substrate</span> <span class="o">=</span> <span class="n">Silica</span><span class="p">(</span><span class="n">lx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">ly</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lz</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">output_folder</span><span class="o">=</span><span class="s1">&#39;output&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">substrate</span><span class="o">.</span><span class="n">shift_z_origin</span><span class="p">(</span><span class="s1">&#39;silica_passivated.data&#39;</span><span class="p">,</span> <span class="n">z_shift</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="go">&quot;silica_shifted_z.data&quot;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface_builder.interface_builder.Silica.thermalize">
+<span class="sig-name descname"><span class="pre">thermalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datafile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">press</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensemble</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NVT'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'silica-thermalize.data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpirun_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lmp_exec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lmp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface_builder.interface_builder.Silica.thermalize" title="Permalink to this definition"></a></dt>
+<dd><p>Run a thermalization procedure on the system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datafile</strong> (<em>str</em>) – The filename of the input data file.</p></li>
+<li><p><strong>time</strong> (<em>float</em>) – The time duration for thermalization.</p></li>
+<li><p><strong>temp</strong> (<em>float</em>) – The temperature for thermalization.</p></li>
+<li><p><strong>output_filename</strong> (<em>str</em><em> or </em><em>None</em>) – (Optional) The filename for the output data file.Default is silica_thermaliz.data.</p></li>
+<li><p><strong>mpirun_n</strong> (<em>int</em>) – (Optional) The number of MPI processes to use for the thermalization simulation. Default is 4.</p></li>
+<li><p><strong>lmp_exec</strong> (<em>str</em>) – (Optional) The LAMMPS executable path or command. Default is ‘lmp’.</p></li>
+<li><p><strong>run</strong> (<em>bool</em>) – (Optional) Whether to run the thermalization simulation. Default is True.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns
+:return: The filename of the output data file, if provided.
+:rtype: str or None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="interface_builder.interface_builder.Silica.thermalize_passivated">
+<span class="sig-name descname"><span class="pre">thermalize_passivated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datafile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">temp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'silica_passivated-thermalize.data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpirun_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lmp_exec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lmp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#interface_builder.interface_builder.Silica.thermalize_passivated" title="Permalink to this definition"></a></dt>
+<dd><p>Run a thermalization procedure on the system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datafile</strong> (<em>str</em>) – The filename of the input data file.</p></li>
+<li><p><strong>time</strong> (<em>float</em>) – The time duration for thermalization.</p></li>
+<li><p><strong>temp</strong> (<em>float</em>) – The temperature for thermalization.</p></li>
+<li><p><strong>output_filename</strong> (<em>str</em><em> or </em><em>None</em>) – (Optional) The filename for the output data file. Default is silica_passivated-thermalize.data.</p></li>
+<li><p><strong>mpirun_n</strong> (<em>int</em>) – (Optional) The number of MPI processes to use for the thermalization simulation. Default is 4.</p></li>
+<li><p><strong>lmp_exec</strong> (<em>str</em>) – (Optional) The LAMMPS executable path or command. Default is ‘lmp’.</p></li>
+<li><p><strong>run</strong> (<em>bool</em>) – (Optional) Whether to run the thermalization simulation. Default is True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The filename of the output data file, if provided.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="main.html" class="btn btn-neutral float-left" title="Interface Builder" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="example/water_contact_angle.html" class="btn btn-neutral float-left" title="System for water contact angle simulation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, A.V.C..</p>
+    <p>&#169; Copyright 2025.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
