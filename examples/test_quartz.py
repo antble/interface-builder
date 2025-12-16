@@ -3,7 +3,7 @@ from interface_builder import Silica
 
 # prepare the surface 
 silica_params = {
-    'polymorph' : 'quartz1',
+    # 'polymorph' : 'quartz1',
     'lx' : 30, 
     'ly' : 100, 
     'lz' : 30, 

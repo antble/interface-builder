@@ -2,7 +2,7 @@
 #
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
-
+from datetime import datetime
 import os
 import sys
 sys.path.insert(0, os.path.abspath(".."))
@@ -11,14 +11,22 @@ sys.path.insert(0, os.path.abspath(".."))
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'interface-builder'
-copyright = '2024, A.V.C.'
 author = 'A.V.C.'
-release = '0.0.1'
+current_year = datetime.now().year
+copyright = f'{current_year}'
+release = '0.0.2'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ['myst_parser',"sphinx.ext.autodoc"]
+extensions = ["myst_parser",
+            "sphinx.ext.autodoc",
+            "sphinx.ext.mathjax"]
+
+# enables ```python fenced blocks
+myst_enable_extensions = ["colon_fence",
+                        "dollarmath",
+                        "amsmath"]
 
 templates_path = ['_templates']
 exclude_patterns = ['Thumbs.db', '.DS_Store']
