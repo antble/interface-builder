@@ -3,6 +3,7 @@ from molecular_builder.geometry import SphereGeometry, CylinderGeometry, BoxGeom
 from molecular_builder import pack_water, write
 from lammps_logfile import File, running_mean
 
+from ase.neighborlist import neighbor_list
 import ase.io as io
 import numpy as np
 import os
@@ -902,11 +903,6 @@ class Silica:
             >>> heat_of_immersion = substrate.get_heat_of_immersion(datafile='silica.data', num_h2o=100)
             0.5181940280748683
         """
-        from molecular_builder import create_bulk_crystal, write, pack_water
-        from molecular_builder.geometry import BoxGeometry, PlaneGeometry
-        import ase.io as io
-        import numpy as np
-
         # Extract dimension of the silica
         data_filepath = os.path.join(self.output_folder, datafile)
         silica_atoms = io.read(
