@@ -73,7 +73,8 @@ class Silica:
         self.sio2_h2o_potential = sio2_h2o_potential
 
         # create the output directory
-        os.system(f'mkdir {output_folder}')
+        if output_folder:
+            os.makedirs(output_folder, exist_ok=True)
         if lx is None and ly is None and lz is None:
             # copy the input file into the working directory
             shutil.copyfile(
@@ -459,9 +460,6 @@ class Silica:
             'potential_filename': self.sio2_h2o_potential,
             'output_folder': self.output_folder
         }
-        lmp_exec = os.path.join(
-            "/home/users/anthonca/silica-water-interface_sandbox/interface_builder/interface_builder/lmp_exec/",
-            "lmp")
         if run:
             script_path = os.path.join(script_dir, 'script', 'in.set_silanol')
             self.execute_lammps(
@@ -542,7 +540,8 @@ class Silica:
             mpirun_n=4,
             lmp_exec='lmp',
             script=None,
-            slurm=False):
+            slurm=False,
+            oversubscribe=True):
         '''Execute a LAMMPS simulation with the given arguments.
         This method executes a LAMMPS simulation using the specified LAMMPS executable and input script, along with additional arguments provided in the lmps_args dictionary.
 
@@ -556,6 +555,8 @@ class Silica:
         :type script: str or None
         :param slurm: (Optional) If True, run the simulation using Slurm on a HPC cluster. Default is False.
         :type slurm: bool
+        :param oversubscribe: (Optional) If True, run mpirun with --oversubscribe. Default is True.
+        :type oversubscribe: bool
 
         :return: None
         '''
@@ -573,8 +574,11 @@ class Silica:
                 **lmps_args)
             sim.run(computer=computer)
         else:
+            mpi_args = f"-n {mpirun_n}"
+            if oversubscribe:
+                mpi_args += " --oversubscribe"
             os.system(
-                f"mpirun -n {mpirun_n} {lmp_exec} -in {script} {lmps_args_list}")
+                f"mpirun {mpi_args} {lmp_exec} -in {script} {lmps_args_list}")
 
     def add_water(
             self,

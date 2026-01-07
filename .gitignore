@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.egg-info/
+log.lammps
+log_*.lammps
+*.data
+*.dump
+amorphous_*/
+quartz*/
+heatofimmersion*/
+Q4*/
+seed.txt
