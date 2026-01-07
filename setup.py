@@ -20,7 +20,9 @@ setup(
     packages=find_packages(),
     install_requires=[
         "numpy",
-        "molecular-builder"
+        "molecular-builder",
+        "lammps-logfile",
+        "pandas"
     ],
     classifiers=[
         "Programming Language :: Python :: 3.9",

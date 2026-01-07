@@ -2,10 +2,10 @@ units metal
 boundary p p p
 atom_style atomic
 
-read_data /Users/anthonca/Documents/PhD/silica-water-sim/contact_angle-amorphous/data/new_set/passivation/data/WCA_system_clean/system2_87SiOH_6436.data
+read_data ${input_filename}
 
 pair_style  usc
-pair_coeff  * * ./data/SiOH2O_nm_0_0.vashishta H O Si
+pair_coeff  * * ${potential_filename} H O Si
 pair_modify coord 2 3 2.0 0.3
 pair_modify coord 2 1 1.4 0.3
 mass            1 1.00794
@@ -27,7 +27,7 @@ variable thermalising_time equal  5 # ps
 variable thermalising_steps equal ${thermalising_time}/${dt}
 
 fix 1 all nvt temp 300 300 $(100*dt)
-dump silica all custom 100 ./data/silica-passivated.dump id type x y z
+dump silica all custom 100 ${output_folder}/silica-passivated.dump id type x y z
 
 log log_passivated-thermalized.lammps 
 thermo_style custom step time temp etotal spcpu cpuremain
@@ -36,4 +36,4 @@ thermo 10
 timestep ${dt}
 run ${thermalising_steps}
 
-write_data ./data/passivated-system2_thermalized.data
+write_data ${output_filename}

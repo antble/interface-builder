@@ -32,7 +32,7 @@ T = 1 # ps
 passivated_silica = silica_thermalize 
 for _ in range(3):
     passivated_silica = silica.passivate(passivated_silica , T, 'passivated_quartz.data',
-                                    thickness=5, mpirun_n=16, lmp_exec='lmp_usc', run=False)
+                                    water_thickness=5, mpirun_n=16, lmp_exec='lmp_usc', run=False)
 
 silica_passivated_thermalize = silica.thermalize_passivated(passivated_silica, time=50, temp=300, 
                                                             output_filename= "silica_passivated_thermalize.data",
